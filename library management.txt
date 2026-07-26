@@ -1,0 +1,77 @@
+library = [
+    {"title": "Python Basics", "available": True},
+    {"title": "Java Programming", "available": True},
+    {"title": "Data Structures", "available": True}
+]
+
+def display_books():
+    print("\nAvailable Books:")
+    for i, book in enumerate(library):
+        status = "Available" if book["available"] else "Borrowed"
+        print(f"{i+1}. {book['title']} - {status}")
+
+def add_book():
+    title = input("Enter book name: ")
+    library.append({"title": title, "available": True})
+    print("Book added successfully!")
+
+def borrow_book():
+    display_books()
+    try:
+        choice = int(input("Enter book number to borrow: "))
+    except ValueError:
+        print("Invalid input!")
+        return
+
+    if 0 < choice <= len(library):
+        if library[choice-1]["available"]:
+            library[choice-1]["available"] = False
+            print("Book borrowed successfully!")
+        else:
+            print("Book is already borrowed!")
+    else:
+        print("Invalid choice!")
+
+def return_book():
+    display_books()
+    try:
+        choice = int(input("Enter book number to return: "))
+    except ValueError:
+        print("Invalid input!")
+        return
+
+    if 0 < choice <= len(library):
+        if not library[choice-1]["available"]:
+            library[choice-1]["available"] = True
+            print("Book returned successfully!")
+        else:
+            print("This book was not borrowed!")
+    else:
+        print("Invalid choice!")
+
+def menu():
+    while True:
+        print("\n===== LIBRARY MENU =====")
+        print("1. View Books")
+        print("2. Add Book")
+        print("3. Borrow Book")
+        print("4. Return Book")
+        print("5. Exit")
+
+        choice = input("Enter your choice: ")
+
+        if choice == "1":
+            display_books()
+        elif choice == "2":
+            add_book()
+        elif choice == "3":
+            borrow_book()
+        elif choice == "4":
+            return_book()
+        elif choice == "5":
+            print("Thank you! Visit again.")
+            break
+        else:
+            print("Invalid choice!")
+
+menu()
